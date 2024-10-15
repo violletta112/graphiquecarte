@@ -81,48 +81,48 @@ with col1:
         except Exception as e:
             st.error(f"Erreur lors du filtrage des données : {e}")
 
-# Handle wilayas selection
-choisir = st.selectbox('Choisir une wilaya', WILAYAS, key='wilaya_choice')
+    # Handle wilayas selection
+    choisir = st.selectbox('Choisir une wilaya', WILAYAS, key='wilaya_choice')
 
-# Dictionary to hold messages for each wilaya
-messages = {
-    'ALGER': """La wilaya d'Alger contient deux agences : <span style='color:red;'><strong>Bab Ezzouar</strong></span> et <span style='color:red;'><strong>El Achour</strong></span>. Vous pouvez sélectionner un fichier pour calculer les taux.""",
-    'CONSTANTINE': "Charger le fichies de Constantine.",
-    'ORAN': "Charger le fichies d'Oran.",
-    'BISKRA': "Charger le fichies de Biskra.",
-    'SÉTIF': "Charger le fichies de Sétif.",
-    'CHLEF': "Charger le fichies de Chlef.",
-    'BECHAR': "Charger le fichies de Bechar."
-}
+    # Dictionary to hold messages for each wilaya
+    messages = {
+        'ALGER': """La wilaya d'Alger contient deux agences : <span style='color:red;'><strong>Bab Ezzouar</strong></span> et <span style='color:red;'><strong>El Achour</strong></span>. Vous pouvez sélectionner un fichier pour calculer les taux.""",
+        'CONSTANTINE': "Charger le fichies de Constantine.",
+        'ORAN': "Charger le fichies d'Oran.",
+        'BISKRA': "Charger le fichies de Biskra.",
+        'SÉTIF': "Charger le fichies de Sétif.",
+        'CHLEF': "Charger le fichies de Chlef.",
+        'BECHAR': "Charger le fichies de Bechar."
+    }
 
-if choisir != 'choisir une wilaya':
-    st.markdown(messages.get(choisir, ""), unsafe_allow_html=True)
+    if choisir != 'choisir une wilaya':
+        st.markdown(messages.get(choisir, ""), unsafe_allow_html=True)
 
-    # File uploader for Excel file
-    uploaded_file = st.file_uploader("Choisir un fichier Excel", type=["xlsx"])
+        # File uploader for Excel file
+        uploaded_file = st.file_uploader("Choisir un fichier Excel", type=["xlsx"])
 
-    if uploaded_file is not None:
-        # Load the uploaded Excel file
-        df_uploaded = pd.read_excel(uploaded_file)
-        st.write(df_uploaded)  # Display first few rows of the DataFrame
+        if uploaded_file is not None:
+            # Load the uploaded Excel file
+            df_uploaded = pd.read_excel(uploaded_file)
+            st.write(df_uploaded)  # Display first few rows of the DataFrame
 
-        try:
-            total1 = df_uploaded.iloc[:6, 2].sum()
-            total2 = df_uploaded.iloc[6:, 2].sum()
-            total_ht = df_uploaded.iloc[:, 1].sum()
+            try:
+                total1 = df_uploaded.iloc[:6, 2].sum()
+                total2 = df_uploaded.iloc[6:, 2].sum()
+                total_ht = df_uploaded.iloc[:, 1].sum()
 
-            st.write(f"Le taux D'AMENAGEMENTS total est : {total1:.4f}")
-            st.write(f"Le taux EQUIPEMENTS total est : {total2:.4f}")
-            total_total = total1 + total2
-            st.write(f"Le taux total est : {total_total:.4f}")
-            st.write(f"Le total des MONTANT HT est : {total_ht:.4f}")
+                st.write(f"Le taux D'AMENAGEMENTS total est : {total1:.4f}")
+                st.write(f"Le taux EQUIPEMENTS total est : {total2:.4f}")
+                total_total = total1 + total2
+                st.write(f"Le taux total est : {total_total:.4f}")
+                st.write(f"Le total des MONTANT HT est : {total_ht:.4f}")
 
-            # Button to show the uploaded DataFrame
-            if st.button("Afficher le tableau Excel chargé"):
-                st.write(df_uploaded)
+                # Button to show the uploaded DataFrame
+                if st.button("Afficher le tableau Excel chargé"):
+                   st.write(df_uploaded)
 
-        except Exception as e:
-            st.error(f"Erreur lors du chargement des données pour la wilaya : {e}")
+            except Exception as e:
+                 st.error(f"Erreur lors du chargement des données pour la wilaya : {e}")
 
 with col2:
     # Display the map with st_folium
